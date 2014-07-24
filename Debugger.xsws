@@ -1,0 +1,55 @@
+function handleIncomingRequest(evt){
+    executeRecordSetObj(evt.data);
+}
+
+
+// init hooks
+$.ws.onmessage = function (evt){
+    handleIncomingRequest(evt);
+    //setTimeout($.ws.send("er"), 10);
+}
+
+
+$.ws.onerror = function (evt) {
+    $.trace.debug("error on connection: " + evt.message);
+    throw new Error(evt.message);
+}
+
+$.ws.onclose = function (evt) {
+    $.trace.debug("connection closed, disabling debugger");
+    debugObject.enabled = false;
+    throw new Error("Close status " + evt.code + ":" + evt.reason);
+}
+
+
+
+
+
+
+function executeRecordSetObj(strSQL){
+	try {
+		var conn = $.db.getConnection();
+		//conn.prepareStatement("SET SCHEMA \"METRIC2\"").execute();  
+		var pstmt = conn.prepareStatement(strSQL);
+		var rs = pstmt.executeQuery();
+		var rsm = rs.getMetaData();
+		var strObj = '';
+		
+		while (rs.next()) {
+			strObj += '{';
+			for (var i = 1; i <= rsm.getColumnCount(); i++){
+				strObj += '"' + rsm.getColumnLabel(i) + '":"' + rs.getString(i) + '",';
+			}
+			strObj = strObj.substring(0, strObj.length - 1);
+			strObj += '},'
+		}
+		rs.close();
+		pstmt.close();
+		conn.close();
+		
+		$.ws.send("Server response: " + "[" + strObj.substring(0, strObj.length - 1) + "]");
+	} catch (err) {
+		//return err.message;
+		$.ws.send(err);
+	}
+}
