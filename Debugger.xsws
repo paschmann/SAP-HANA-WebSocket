@@ -6,7 +6,6 @@ function handleIncomingRequest(evt){
 // init hooks
 $.ws.onmessage = function (evt){
     handleIncomingRequest(evt);
-    //setTimeout($.ws.send("er"), 10);
 }
 
 
