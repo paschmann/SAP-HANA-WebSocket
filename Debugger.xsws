@@ -28,7 +28,6 @@ $.ws.onclose = function (evt) {
 function executeRecordSetObj(strSQL){
 	try {
 		var conn = $.db.getConnection();
-		//conn.prepareStatement("SET SCHEMA \"METRIC2\"").execute();  
 		var pstmt = conn.prepareStatement(strSQL);
 		var rs = pstmt.executeQuery();
 		var rsm = rs.getMetaData();
@@ -48,7 +47,6 @@ function executeRecordSetObj(strSQL){
 		
 		$.ws.send("Server response: " + "[" + strObj.substring(0, strObj.length - 1) + "]");
 	} catch (err) {
-		//return err.message;
 		$.ws.send(err);
 	}
 }
