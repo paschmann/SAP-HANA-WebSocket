@@ -3,7 +3,7 @@ SAP-HANA-WebSocket
 
 A small hack for SAP HANA to repurpose the Debugging.xsws file for websocket use (could be data retrieval or any other server side functionality).
 
-Read more about this hack here: [http://scn.sap.com/community/developer-center/hana/blog/2014/07/25/sap-hana-websockets]("http://scn.sap.com/community/developer-center/hana/blog/2014/07/25/sap-hana-websockets")
+Read more about this here: [http://scn.sap.com/community/developer-center/hana/blog/2014/07/25/sap-hana-websockets]("http://scn.sap.com/community/developer-center/hana/blog/2014/07/25/sap-hana-websockets")
 
 ### Install
 
